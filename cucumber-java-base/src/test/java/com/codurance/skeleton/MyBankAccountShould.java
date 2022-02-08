@@ -2,7 +2,6 @@ package com.codurance.skeleton;
 
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -11,11 +10,13 @@ class MyBankAccountShould {
     void print_only_header_after_account_created(){
 
     }
+
     @Test
     void deposit_stores_a_value()
     {
         ConsolePrinter printer = mock(ConsolePrinter.class);
-        MyBankAccountService account = new MyBankAccount(printer);
+        DateProvider dateProvider= mock(DateProvider.class);
+        MyBankAccountService account = new MyBankAccount(printer, dateProvider);
         account.deposit(100);
 
         account.printStatement();

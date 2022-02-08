@@ -1,16 +1,20 @@
 package com.codurance.skeleton;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 public class Transaction {
     private int transaction;
-    private LocalDate date;
+    private int balance;
+    private String date;
 
-    Transaction(int transaction, LocalDate date){
+    Transaction(int transaction, String date, int balance){
         this.transaction = transaction;
         this.date = date;
+        this.balance = balance;
+    }
+
+    public int getBalance() {
+        return balance;
     }
 
     @Override
@@ -31,6 +35,6 @@ public class Transaction {
     }
 
     public String date() {
-        return date.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+        return date;
     }
 }

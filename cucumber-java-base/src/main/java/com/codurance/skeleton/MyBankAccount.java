@@ -1,33 +1,53 @@
 package com.codurance.skeleton;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class MyBankAccount implements MyBankAccountService {
     private List<Transaction> transactions = new ArrayList<>();
-    private  ConsolePrinter consolePrinter;
-    public MyBankAccount(ConsolePrinter consolePrinter) {
+    private ConsolePrinter consolePrinter;
+    private DateProvider dateProvider;
+
+    public MyBankAccount(ConsolePrinter consolePrinter, DateProvider dateProvider) {
         this.consolePrinter = consolePrinter;
+        this.dateProvider = dateProvider;
     }
+
     @Override
     public void deposit(int amount) {
-        transactions.add(new Transaction(amount, LocalDate.now()));
+        int updatedBalance;
+
+        if(!transactions.isEmpty()){
+            updatedBalance = transactions.get(0).getBalance() + amount;
+        }
+        else
+        {
+            updatedBalance = + amount;
+        }
+
+        transactions.add(0, new Transaction(amount, dateProvider.getDate(), updatedBalance));
     }
 
     @Override
     public void withdraw(int amount) {
-        transactions.add(new Transaction(-amount, LocalDate.now()));
+        int updatedBalance;
+
+        if(!transactions.isEmpty()){
+            updatedBalance = transactions.get(0).getBalance() - amount;
+        }
+        else
+        {
+            updatedBalance = - amount;
+        }
+
+        transactions.add(0, new Transaction(-amount,  dateProvider.getDate(), updatedBalance));
     }
 
     @Override
     public void printStatement() {
         consolePrinter.print("Date | Amount | Balance");
-        AtomicInteger balance = new AtomicInteger();
         transactions.forEach(transaction -> {
-            balance.addAndGet(transaction.amount());
-            consolePrinter.print(transaction.date() + " | " + transaction.amount() + " | " + balance);
+            consolePrinter.print(transaction.date() + " | " + transaction.amount() + " | " + transaction.getBalance());
         });
     }
 }

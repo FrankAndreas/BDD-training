@@ -1,8 +1,21 @@
 package com.codurance.skeleton;
 
-public class MyBankAccount {
+public class MyBankAccount implements MyBankAccountService {
 
-    public MyBankAccount() {
-        throw new io.cucumber.java.PendingException();
+    public MyBankAccount(ConsolePrinter consolePrinter) {
+    }
+    @Override
+    public void deposit(int amount) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void withdraw(int amount) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void printStatement() {
+        throw new UnsupportedOperationException();
     }
 }
